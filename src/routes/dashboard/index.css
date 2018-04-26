@@ -1,0 +1,18 @@
+.dashboard {
+  display: inline;
+  position: absolute;
+  left: 0;
+  background: #006699;
+  padding: 10px;
+  opacity: 1;
+  cursor: pointer;
+  animation:myfirst 5s;
+}
+
+@keyframes myfirst
+{
+  0%   {background:red;}
+  25%  {background:yellow;}
+  50%  {background:blue;}
+  100% {background:green;}
+}
