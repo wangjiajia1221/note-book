@@ -1,4 +1,10 @@
-.dashboard {
+.dashborad {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.jsAnimation {
   display: inline;
   position: absolute;
   left: 0;
@@ -8,6 +14,16 @@
   cursor: pointer;
   animation:myfirst 5s;
 }
+.css-animation {
+  display: inline-block;
+  white-space: nowrap;
+  margin-left: 0;
+  background: #006699;
+  padding: 10px;
+  opacity: 1;
+  cursor: pointer;
+  animation:cssAnimation 5s linear;
+}
 
 @keyframes myfirst
 {
@@ -15,4 +31,13 @@
   25%  {background:yellow;}
   50%  {background:blue;}
   100% {background:green;}
+}
+
+@keyframes cssAnimation
+{
+  0%   {opacity:0; margin-left: 0;}
+  25%  {opacity:0.5; margin-left: 300px;}
+  50%  {opacity:1; margin-left: 600px;}
+  75%  {opacity:0.5; margin-left: 900px;}
+  100% {opacity:0; margin-left: 1200px;}
 }

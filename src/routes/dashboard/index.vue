@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span :class="styles['dashboard']">
-      dashboard{{styles['dashboard']}}
+    <span :class="styles['jsAnimation']" v-for="item in items">
+      jsAnimation{{styles['jsAnimation']}}
     </span>
   </div>
 </template>
@@ -12,7 +12,7 @@
     data() {
       return {
         styles: styles,
-        value: 1
+        items: [1,2,3,4,5]
       }
     },
     mounted() {
@@ -20,34 +20,45 @@
     },
     methods: {
       changeBack() {
-        let dom = document.getElementsByClassName(this.styles.dashboard);
-        let timer;
-        function loop() {
-          timer = setInterval(() => {
-            if(dom[0].style.opacity == '' || dom[0].style.left == '') {
-              dom[0].style.opacity = 1;
+        let dom = document.getElementsByClassName(this.styles.jsAnimation);
+        let timer = [];
+        function loop(index) {
+          timer[index] = setInterval(() => {
+            if(dom[index].style.opacity == '' || dom[index].style.left == '') {
+              dom[index].style.opacity = 1;
             }
-            if(dom[0].style.opacity == 0.7) {
-              dom[0].style.animationPlayState = 'paused';
+            if(dom[index].style.opacity == 0.7) {
+              dom[index].style.animationPlayState = 'paused';
             }
-            dom[0].style.opacity = parseFloat(dom[0].style.opacity) - 0.01;
-            dom[0].style.left = dom[0].offsetLeft + 7 + 'px';
-            if(dom[0].style.opacity == 0) {
-              clearInterval(timer);
-              let parent = dom[0].parentNode;
-              parent.removeChild(dom[0]);
+            dom[index].style.opacity = parseFloat(dom[index].style.opacity) - 0.01;
+            dom[index].style.left = dom[index].offsetLeft + 7 + 'px';
+            if(dom[index].style.opacity == 0) {
+              clearInterval(timer[index]);
+              let parent = dom[index].parentNode;
+              parent.removeChild(dom[index]);
             }
           }, 50) 
         }
-        loop();
-        dom[0].onmouseover = () => {
-          clearInterval(timer);
-          dom[0].style.animationPlayState = 'paused';
+        function bindEvent(index) {
+          dom[index].onmouseover = () => {
+            clearInterval(timer[index]);
+            dom[index].style.animationPlayState = 'paused';
+          }
+          dom[index].onmouseout = () => {
+            loop(index);
+            dom[index].style.animationPlayState = 'running';
+          }
         }
-        dom[0].onmouseout = () => {
-          loop();
-          dom[0].style.animationPlayState = 'running';
-        }
+        let len = dom.length;
+        let timer2 = setInterval(() => {
+          if(len == 0) {
+            clearInterval(timer2);
+          } else {
+            len--;
+            bindEvent(len);
+            loop(len);
+          }
+        },2500)
       }
     }
   }
